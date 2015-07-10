@@ -330,14 +330,15 @@ def main()
   $board = Hash.new(0)
   $winPos = []
   running = true
+  restart_flag = false
   
   while running
     probably_tie = false
     
     draw_board()
-    print "Select a position (or type 'quit' to quit): "
+    print "Select a position, type 'restart' to restart the game, or type 'quit' to quit: "
     response = gets.chomp
-    if not response == "quit"
+    if not response == "quit" and not response == "restart"
       position = get_position_from_response(response)
       if not position == false
         if $board[position] == 0
@@ -352,9 +353,12 @@ def main()
       else
         puts "Invalid position!".red
       end
-    else
+    elsif response == "quit"
       running = false
       return
+    elsif response == "restart"
+      restart_flag = true
+      break
     end
     
     if check_win($user_type)
@@ -374,18 +378,22 @@ def main()
     end
   end
   
-  ask_again = true
-  while ask_again
-    print "Do you want to play again? (yes/no) "
-    again = gets.chomp.downcase
-    case again[0]
-      when "y"
-        main()
-        ask_again = false
-      when "n"
-        ask_again = false
-    else
-      ask_again = true
+  if restart_flag
+    main()
+  else
+    ask_again = true
+    while ask_again
+      print "Do you want to play again? (yes/no) "
+      again = gets.chomp.downcase
+      case again[0]
+        when "y"
+          main()
+          ask_again = false
+        when "n"
+          ask_again = false
+      else
+        ask_again = true
+      end
     end
   end
 end
