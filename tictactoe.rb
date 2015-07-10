@@ -137,6 +137,11 @@ def do_move()
       return true
     end
   end
+  if $board[[0, 0]] == $user_type and $board[[2, 1]] == $user_type
+    if place_square([2, 0])
+      return true
+    end
+  end
   
   if user_target > -1
     if try_place_line(user_target, $computer_type)
