@@ -107,6 +107,20 @@ def would_win_in_one_if_placed(target, type)
 end
 
 def do_move()
+  $ai[:target_line] = get_target_line($computer_type)
+  user_target = get_target_line($user_type)
+  
+  if $ai[:target_line] > -1 and would_win_in_one_if_placed($ai[:target_line], $computer_type)
+    if try_place_line($ai[:target_line], $computer_type)
+      return true
+    end
+  end
+  if user_target > -1 and would_win_in_one_if_placed(user_target, $user_type)
+    if try_place_line(user_target, $computer_type)
+      return true
+    end
+  end
+  
   # corner checks
   # if not blocked, these allow for creating forks quickly in the beginning of the game.
   if $board[[0, 0]] == $user_type
@@ -132,14 +146,6 @@ def do_move()
   
   if place_square([1, 1]) # get the center
     return true
-  end
-  $ai[:target_line] = get_target_line($computer_type)
-  user_target = get_target_line($user_type)
-  
-  if $ai[:target_line] > -1 and would_win_in_one_if_placed($ai[:target_line], $computer_type)
-    if try_place_line($ai[:target_line], $computer_type)
-      return true
-    end
   end
   
   # SPECIAL CASES
