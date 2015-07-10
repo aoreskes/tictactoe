@@ -107,6 +107,29 @@ def would_win_in_one_if_placed(target, type)
 end
 
 def do_move()
+  # corner checks
+  # if not blocked, these allow for creating forks quickly in the beginning of the game.
+  if $board[[0, 0]] == $user_type
+    if place_square([2, 2])
+      return true
+    end
+  end
+  if $board[[2, 0]] == $user_type
+    if place_square([0, 2])
+      return true
+    end
+  end
+  if $board[[2, 2]] == $user_type
+    if place_square([0, 0])
+      return true
+    end
+  end
+  if $board[[0, 2]] == $user_type
+    if place_square([2, 0])
+      return true
+    end
+  end
+  
   if place_square([1, 1]) # get the center
     return true
   end
