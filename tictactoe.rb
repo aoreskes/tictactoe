@@ -119,6 +119,15 @@ def do_move()
     end
   end
   
+  # SPECIAL CASES
+  # These routines check for certain strategies and blocks them.
+  # TODO: generalize these
+  if $board[[1, 1]] == $user_type and $board[[2, 2]] == $user_type and $board[[0, 0]] == $computer_type
+    if place_square([0, 2])
+      return true
+    end
+  end
+  
   if user_target > -1
     if try_place_line(user_target, $computer_type)
       return true
@@ -235,7 +244,7 @@ def draw_row(y, winning_type=-1)
 end
 
 def draw_board(winning_type=-1)
-  puts "+-----------+"
+  puts "+-----------+" #.colorize(:color => :white, :background => :light_black)
   draw_row(0, winning_type)
   puts "|-----------|"
   draw_row(1, winning_type)
